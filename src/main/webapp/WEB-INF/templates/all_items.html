@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Spring MVC GeekApp</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Список товаров:</h1>
+        <span th:if="${items.isEmpty()}">Товары отсутствуют</span>
+        <br>
+        <table class="table" th:if="${!items.isEmpty()}">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Название</td>
+                <td>Цена</td>
+                <td>Действие</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.cost}"></td>
+                <td><a class="btn btn-danger" th:href="@{'/items/delete/' + ${item.id}}">Удалить</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <span th:if="${!items.isEmpty()}" th:text="'Количество товаров: ' + ${items.size()}"></span>
+        <br>
+        <br>
+        <h2>Добавить новый товар:</h2>
+        <form method="POST" th:action="@{/items/add}">
+            <input type="text" name="title" placeholder="Название товара">
+            <input type="number" name="cost" placeholder="Цена товара">
+            <button class="btn btn-primary" type="submit">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>
